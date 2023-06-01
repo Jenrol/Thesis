@@ -117,8 +117,8 @@ Extension_15<-select(Ext_15,HHID,a9q4a,a9q4b,a9q4c,a9q4d,a9q5a,a9q5b,a9q5d,a9q6a
 Extension2_15<-select(Ext2_15,HHID,a9q11,a9q12,a9q13,a9q14,a9q15,a9q16)
 Farm_Implement_15<-select(FI_15, HHID,A10itemcod,a10q1,a10q2,a10q3,a10q4,a10q6)
 Animal_power_13<-select(AP_15,HHID, a11q2,a11q3)
-# to select variable needed from the dataset 18
 
+# to select variable needed from the dataset 18
 Household_18<-select(HH18,t0_hhid,region,urban,hhsize)
 Landholding_18<-select(LH_18,t0_hhid,parcelID,a2aq1owned,s2aq4,s2aq5,s2aq6,s2aq7,s2aq8,s2aq10,s2aq11a,s2aq11b,s2aq15a,s2aq15b,s2aq16,s2aq17,a2aq18,s2aq19)
 landholding_use_right_18<-select(LHU_18,t0_hhid,parcelID,a2bq1owned,s2aq04,s2aq05,s2aq06,s2aq07,s2aq08,a2bq09,a2bq10,a2bq11,a2bq12a,a2bq12b,s2aq16,s2aq17,a2aq18,s2aq19)
@@ -144,7 +144,6 @@ Farm_Implement_18<- select(FI_18,t0_hhid,A10itemcod_ID,s10q01a,s10q02a,s10q03aa,
 Animal_power_18<-select(AP_18,to_hhid, s11q02,s11q03)
 
 #creating database
-
 #first visit 2013
 #merge plot level observation 
 Plot_L1_13<-merge(labour_input_13,CropGrown13_visit1, by=c("HHID", "plotID"))
@@ -153,12 +152,12 @@ Plot_L2_13$visit<-1
 
 
 #Farm<-merge(Farm_Implement_13,Animal_power_13, by="HHID")
-#second visit
+#second visit 2013
 Plot2_L1_13<-merge(labour_input2_13,CropGrown13_visit2, by=c("HHID", "plotID"))
 Plot2_L2_13<-merge(Plot2_L1_13,Production2_13,by=c("HHID", "plotID"))
 Plot2_L2_13$visit<-2
 
-#merge household level observation
+#merge household level observation 2013
 HH1_13<-merge(Household_13,landholding_13, by= "HHID")
 HH2_13<-merge(HH1_13,landholding_use_right_13,by="HHID")
 Ext13<-merge(Extension_13,Extension2_13,by="HHID")
@@ -172,18 +171,17 @@ Plot_data13<-rbind(Plot_L2_13,Plot2_L2_13)
 plot_overall_13<-merge(Plot_data13,HH4_13, by="HHID")
 
 #2015 DATAFRAME
-
 #first visit 2015
-#merge plot level observation 
+#merge plot level observation 2015
 Plot_L1_15<-merge(labour_input_15,CropGrown15_visit1, by=c("HHID", "plotID"))
 Plot_L2_15<-merge(Plot_L1_15,Production_15,by=c("HHID", "plotID"))
 
 
-#second visit
+#second visit 2015
 Plot2_L1_15<-merge(labour_input2_15,CropGrown15_visit2, by=c("HHID", "plotID"))
 Plot2_L2_15<-merge(Plot2_L1_15,Production2_15,by=c("HHID", "plotID"))
 
-#merge household level observation
+#merge household level observation 2015
 HH1_15<-merge(Household_15,landholding_15, by= "HHID")
 HH2_15<-merge(HH1_15,landholding_use_right_15,by="HHID")
 Ext15<-merge(Extension_15,Extension2_15)
@@ -193,23 +191,23 @@ HH4_15<-merge(HH3_15,Extension2_15,by="HHID")
 
 
 #first visit 2018
-#merge plot level observation 
+#merge plot level observation 2018
 Plot_L1_18<-merge(labour_input_18,CropGrown18_visit1, by=c("t0_hhid", "pltid"))
 Plot_L2_18<-merge(Plot_L1_18,Production_18,by=c("t0_hhid", "pltid"))
 
 
-#second visit
+#second visit 2018
 Plot2_L1_18<-merge(labour_input2_18,CropGrown18_visit2, by=c("t0_hhid", "pltid"))
 Plot2_L2_18<-merge(Plot2_L1_18,Production2_18,by=c("t0_hhid", "pltid"))
 
-#merge household level observation
+#merge household level observation 2018
 HH1_18<-merge(Household_18,Landholding_18, by= "t0_hhid")
 HH2_18<-merge(HH1_18,landholding_use_right_18,by="t0_hhid")
 Ext18<-merge(Extension_18,Extension2_18, by="t0_hhid")
 HH3_18<-merge(HH2_18,Extension_18,by="t0_hhid")
 HH4_18<-merge(HH3_18,Extension2_18,by="t0_hhid")
 
-#All year data frame
+#All year data frame from dta file
 combined_2013<-read_dta("data_2013.dta")
 combined_2015<-read_dta("data_2015.dta")
 combined_2018<-read_dta("data_2018.dta")
@@ -221,6 +219,7 @@ rbind(Combined_2013_15,Var2018)
 skim(Combined_2013_15)
 table(Combined_2013_15$a2aq18)
 
+#selecting variables from dta files
 DATA_2013<-select(combined_2013,HHID,plotID,cropID,parcelID,h2q3,h2q8,h2q10,h4q4,h4q5,h4q7,h4q15g,HHASH_ID,h14Bq2,
                   region,urban,a2aq1owned,a2aq4,a2aq5,a2aq6,a2aq7,a2aq8,a2aq10,a2aq11a,a2aq11b,a2aq15a,a2aq15b,a2aq16,a2aq17,
                   a2aq18,a2aq19,a3bq4,a3bq5,a3bq6,a3bq7,a3bq8,a3bq12,a3bq13,a3bq15,a3bq16,a3bq17,a3bq18,a3bq22,a3bq24b,a3bq24a,a3bq25,a3bq26,a3bq27,a3bq3_1,
@@ -270,6 +269,8 @@ dataset_18<-select(combined_2018,t0_hhid,h2q3,h2q8,s4q07,h14q02,h14q05,urban,hhs
                      s5bq08_1,s5bq12_1,a5bq6b,s5bq14a_2,s5bq14b_2,s5bq15_2)
 table(Variables_18$region)
 summary(Variables_18$IncomeSource)
+
+# replacing binary values to match the whole data set 
 dataset_18$Mstatus<-ifelse(Variables_18$h2q10>2,0,1)
 dataset_18$literacy<-ifelse(Variables_18$s4q04>2,1,0)
 dataset_18$soiltype<-ifelse(Variables_18$s2aq16>1,0,1)
@@ -298,18 +299,20 @@ D2018<-read_dta("2018_data.dta")
 DATA_new<-read_dta("data_new_2018.dta")
 
 
-
+#Removing duplicates
 obj_18 <- dplyr::distinct(OBJ, t0_hhid, .keep_all = TRUE)
 
 obj_unique_cleaned_18 <- obj_18[ which(stringr::str_detect(obj_18$t0_hhid,"H")), ]
 describe(obj_unique_cleaned_18)
 cor(obj_unique_cleaned_18,use="complete.obs")
+
+# multivariate probit analysis
 mvprob1<-mvprobit(cbind(s4bq13,s3bq04,s3bq13,s3bq22)~h2q3,h2q8,s4q07,urban,
                   hhsize,lvstck,a2aq1owned,h9q03a__1,h9q12a,s4bq08,Mstatus,
                   literacy,water,central,eastern,Northern,yield,data=obj_unique_cleaned_18,
                   iterlim=1,)
 
-
+# summary analysis per region
 D2018 %>%
   group_by(urban)%>%
   summarize(sum_area=sum(s2aq5,na.rm=TRUE),
@@ -324,7 +327,7 @@ D2018 %>%
             count=n(),
             average_area=mean(s2aq5,na.rm=TRUE))
 
-#replacing NAs 
+#replacing NAs with mean values of the variable
 #in parcel size by overall mean
 D2018$s2aq5[which(is.na(D2018$s2aq5))]<-mean(D2018$s2aq5,na.rm = TRUE)
 
@@ -350,7 +353,6 @@ D2018$s4bq07[which(is.na(D2018$s4bq07))]<-mean(D2018$s4bq07,na.rm = TRUE)
 D2018$s4q07[which(is.na(D2018$s4q07))]<-mean(D2018$s4q07,na.rm = TRUE)
 
 #replacing NAs in binary variables with zero
-
 D2018$s3bq13[which(is.na(D2018$s3bq13))]<-0
 D2018$s3bq22[which(is.na(D2018$s3bq22))]<-0
 D2018$s3bq04[which(is.na(D2018$s3bq04))]<-0
@@ -402,13 +404,6 @@ D2018$h2q3[D2018$h2q3=="2"]<-0
 D2018$hh_anm[D2018$hh_anm=="2"]<-0
 D2018$lvstck[D2018$lvstck=="2"]<-0
 D2018$urban[D2018$urban=="2"]<-0
-
-#replacing NAs for binary variable with zero
-
-
-
-
-
 
 
 
@@ -467,9 +462,7 @@ describe(DATA_chem_cleaned_18)
 
 
 
-
-
-#DATA  CLEANING
+#Installing packages for statistical analysis
 install.packages("mvProbit")
 install.packages("Hmisc")
 library(mvProbit)
@@ -501,17 +494,20 @@ DATA_use$lvstck[DATA_use$lvstck=="2"]<-0
 DEP<-select(DATA_use,seed,pesticide,organicfert,inorganicfert)
 INDEP<-select(DATA_use,age,gender,lvstck,assetvalue,urban,hhsize,cropsystem,yield,
               areafarmed,maritalstatus,education,landown,participateNAAD)
+#rounding off values
 round(cor(DEP),digits = 2)
 round(cor(INDEP),digits = 2)
 round(cor(DATA_use),digits = 2)
 str(data_daa)
-rcorr(as.matrix(DATA_use),type="pearson")
 
+# correlation analysis
+rcorr(as.matrix(DATA_use),type="pearson")
 
 cor(DATA_use)
 DATA_use$agesq<-DATA_use$age*DATA_use$age
 DATA_use$logyield<-log(DATA_use$yield)
 write.dta(DATA_use, "DATA_USE.dta")
+# Regression alnalysis for all dependent variables
 
 factor<-glm(seed~age+gender+cropsystem+areafarmed+urban
          +inorganicfert+organicfert+infogrp+participateNAAD
@@ -684,7 +680,7 @@ Reg_asset3<-lm(assetvalue~participateNAAD+age+gender+cropsystem+areafarmed+infog
                  education+hhsize+lvstck+landown, data=DATA_use)
 stargazer(Reg_asset,Reg_asset2,Reg_asset3, align = TRUE, type = "text")
 
-#consumption dataset
+#Adding consumption dataset to the variables
 consumption<-read_dta("GSEC15B.dta")
 summary(consumption)
 HH18<-read_dta("AGSEC1.dta")
